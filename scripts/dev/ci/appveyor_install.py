@@ -51,15 +51,16 @@ pyqt_url = ('https://www.qutebrowser.org/pyqt/'
             'PyQt5-{}-gpl-Py3.4-Qt{}-x32.exe'.format(
                 pyqt_version, qt_version))
 
-try:
-    urllib.urlretrieve(pyqt_url, r'C:\install-PyQt5.exe')
-except (OSError, IOError):
-    print("Downloading PyQt failed, trying again in 10 seconds...")
-    time.sleep(10)
-    urllib.urlretrieve(pyqt_url, r'C:\install-PyQt5.exe')
+if '-pyqt' not in os.environ['TESTENV']:
+    try:
+        urllib.urlretrieve(pyqt_url, r'C:\install-PyQt5.exe')
+    except (OSError, IOError):
+        print("Downloading PyQt failed, trying again in 10 seconds...")
+        time.sleep(10)
+        urllib.urlretrieve(pyqt_url, r'C:\install-PyQt5.exe')
 
-print("Installing PyQt5...")
-subprocess.check_call([r'C:\install-PyQt5.exe', '/S'])
+    print("Installing PyQt5...")
+    subprocess.check_call([r'C:\install-PyQt5.exe', '/S'])
 
 print("Installing tox")
 pip_install('pip')
