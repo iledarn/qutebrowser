@@ -45,14 +45,17 @@ def pip_install(pkg):
                            pkg])
 
 
-print("Getting PyQt5...")
-qt_version = '5.5.1'
-pyqt_version = '5.5.1'
-pyqt_url = ('https://www.qutebrowser.org/pyqt/'
-            'PyQt5-{}-gpl-Py3.4-Qt{}-x32.exe'.format(
-                pyqt_version, qt_version))
+using_pypi = '-pyqt' in os.environ['TESTENV']
 
-if '-pyqt' not in os.environ['TESTENV']:
+
+if not using_pypi:
+    print("Getting PyQt5...")
+    qt_version = '5.5.1'
+    pyqt_version = '5.5.1'
+    pyqt_url = ('https://www.qutebrowser.org/pyqt/'
+                'PyQt5-{}-gpl-Py3.4-Qt{}-x32.exe'.format(
+                    pyqt_version, qt_version))
+
     try:
         urllib.urlretrieve(pyqt_url, r'C:\install-PyQt5.exe')
     except (OSError, IOError):
@@ -71,4 +74,5 @@ print("Linking Python...")
 with open(r'C:\Windows\system32\python3.bat', 'w') as f:
     f.write(r'@C:\Python34\python %*')
 
-check_setup(r'C:\Python34\python')
+if not using_pypi:
+    check_setup(r'C:\Python34\python')
