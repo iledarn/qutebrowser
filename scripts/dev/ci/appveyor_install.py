@@ -73,6 +73,10 @@ pip_install(r'-rmisc\requirements\requirements-tox.txt')
 print("Linking Python...")
 with open(r'C:\Windows\system32\python3.bat', 'w') as f:
     f.write(r'@C:\Python34\python %*')
+with open(r'C:\Windows\system32\python3.5.bat', 'w') as f:
+    f.write(r'@C:\Python35\python %*')
+with open(r'C:\Windows\system32\python3.6.bat', 'w') as f:
+    f.write(r'@C:\Python36\python %*')
 
 if not using_pypi:
     check_setup(r'C:\Python34\python')
